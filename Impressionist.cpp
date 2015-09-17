@@ -31,7 +31,7 @@ int main(int	argc,
 	impUI->setDocument(impDoc);
 	impDoc->setUI(impUI);
 
-	Fl::visual(FL_DOUBLE|FL_INDEX);
+	Fl::visual(FL_DOUBLE|FL_INDEX); //Hardware double buffering
 
 	impUI->show();
 

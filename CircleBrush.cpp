@@ -6,7 +6,7 @@
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
 #include "circlebrush.h"
-
+#include "math.h"
 extern float frand();
 
 CircleBrush::CircleBrush(ImpressionistDoc* pDoc, char* name) :
@@ -38,10 +38,38 @@ void CircleBrush::BrushMove(const Point source, const Point target)
 		return;
 	}
 
-	glBegin(GL_POINTS);
-	SetColor(source);
+	
 
-	glVertex2d(target.x, target.y);
+	double theta = 2*M_PI/ 360.0;
+	double tangetial_factor = tan(theta);//calculate the tangential factor 
+
+	double radial_factor = cos(theta);//calculate the radial factor 
+
+	double x = 20.0;//we start at angle = 0 
+
+	double y = 0;
+
+	glBegin(GL_POLYGON);
+	SetColor(source);
+	for (int i=0; i< 360; i++)
+	{
+		glVertex2f(x + target.x, y + target.y);
+		
+		
+
+		double tx = -y;
+		double ty = x;
+
+		
+
+		x += tx * tangetial_factor;
+		y += ty * tangetial_factor;
+
+		//correct using the radial factor 
+
+		x *= radial_factor;
+		y *= radial_factor;
+	}
 
 	glEnd();
 }
