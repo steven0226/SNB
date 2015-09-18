@@ -48,7 +48,7 @@ void PaintView::draw()
 	glDrawBuffer(GL_FRONT_AND_BACK);
 	#endif // !MESA
 
-	if(!valid())
+	if(!valid()) //avoid unneccessarily initializing the OpenGL context
 	{
 
 		glClearColor(0.7f, 0.7f, 0.7f, 1.0);
@@ -56,7 +56,7 @@ void PaintView::draw()
 		// We're only using 2-D, so turn off depth 
 		glDisable( GL_DEPTH_TEST );
 
-		ortho();
+		ortho(); //Set the projection so 0,0 is in the lower left of the window and each pixel is 1 unit wide/tall. If you are drawing 2D images, your draw() method may want to call this if valid() is false.
 
 		glClear( GL_COLOR_BUFFER_BIT );
 	}

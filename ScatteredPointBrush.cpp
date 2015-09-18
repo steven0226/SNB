@@ -20,9 +20,6 @@ void ScatteredPointBrush::BrushBegin(const Point source, const Point target)
 	ImpressionistUI* dlg = pDoc->m_pUI;
 
 	int size = pDoc->getSize();
-
-
-
 	glPointSize((float)size);
 
 	BrushMove(source, target);
@@ -37,12 +34,25 @@ void ScatteredPointBrush::BrushMove(const Point source, const Point target)
 		printf("ScatteredPointBrush::BrushMove  document is NULL\n");
 		return;
 	}
-	
+	int size;
+	glGetIntegerv(GL_POINT_SIZE, &size);
+	glPointSize((float)1);
+
 	glBegin(GL_POINTS);
 	SetColor(source);
 
-	glVertex2d(target.x, target.y);
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			if (frand() > 0.20f) continue;
+			Point subs = Point(source.x+(-size/2+i), source.y+(-size/2+j));
+			Point subt = Point(target.x+(-size/2+i), target.y+(-size/2+j));
+			ImpBrush::c_pBrushes[BRUSH_POINTS]->BrushMove(subs, subt);
+		}
+	}
 
+	glPointSize((float)size);
 	glEnd();
 }
 
