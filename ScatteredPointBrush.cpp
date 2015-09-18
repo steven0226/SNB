@@ -37,7 +37,7 @@ void ScatteredPointBrush::BrushMove(const Point source, const Point target)
 		printf("ScatteredPointBrush::BrushMove  document is NULL\n");
 		return;
 	}
-
+	
 	glBegin(GL_POINTS);
 	SetColor(source);
 
