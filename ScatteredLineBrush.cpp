@@ -37,9 +37,7 @@ void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 		printf("ScatteredLineBrush::BrushMove  document is NULL\n");
 		return;
 	}
-	int size;
-	glGetIntegerv(GL_POINT_SIZE, &size);
-	//glBegin(GL_POINTS);
+	int size = pDoc->getSize();
 	SetColor(source);
 	for (int j = 0; j < 4; j++)
 	{
@@ -52,7 +50,6 @@ void ScatteredLineBrush::BrushMove(const Point source, const Point target)
 		ImpBrush::c_pBrushes[BRUSH_LINES]->BrushMove(subs, subt);
 	}
 
-	//glEnd();
 }
 
 void ScatteredLineBrush::BrushEnd(const Point source, const Point target)

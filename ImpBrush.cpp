@@ -43,12 +43,12 @@ char* ImpBrush::BrushName(void)
 void ImpBrush::SetColor (const Point source)
 {
 	ImpressionistDoc* pDoc = GetDocument();
-
+	double alpha = pDoc->getAlpha();
 
 	GLubyte color[3];
 
 	memcpy ( color, pDoc->GetOriginalPixel( source ), 3 );
- 
+
 	glColor3ubv( color );
 
 }

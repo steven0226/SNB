@@ -39,8 +39,8 @@ void ScatteredCircleBrush::BrushMove(const Point source, const Point target)
 		return;
 	}
 
-	int size;
-	glGetIntegerv(GL_POINT_SIZE, &size);
+	int size = pDoc->getSize();
+	//glGetIntegerv(GL_POINT_SIZE, &size);
 
 	int no_of_circle = irand(2) + 3; //3 or 4 circle 
 	for (int i = 0; i< no_of_circle; i++)
@@ -54,7 +54,7 @@ void ScatteredCircleBrush::BrushMove(const Point source, const Point target)
 	}
 	
 
-	//glEnd();
+	
 }
 
 void ScatteredCircleBrush::BrushEnd(const Point source, const Point target)

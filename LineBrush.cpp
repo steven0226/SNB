@@ -20,11 +20,11 @@ void LineBrush::BrushBegin(const Point source, const Point target)
 	ImpressionistUI* dlg = pDoc->m_pUI;
 
 	int size = pDoc->getSize();
-
+	int width = pDoc->getLineWidth();
 
 
 	glPointSize((float)size);
-
+	glLineWidth((float)width);
 	BrushMove(source, target);
 }
 
@@ -37,8 +37,8 @@ void LineBrush::BrushMove(const Point source, const Point target)
 		printf("LineBrush::BrushMove  document is NULL\n");
 		return;
 	}
-	double length;
-	glGetDoublev(GL_POINT_SIZE, &length);
+	int length = pDoc->getSize();
+	int angle = pDoc->getLineAngle();
 
 	glBegin(GL_LINES);
 	SetColor(source);

@@ -34,8 +34,7 @@ void ScatteredPointBrush::BrushMove(const Point source, const Point target)
 		printf("ScatteredPointBrush::BrushMove  document is NULL\n");
 		return;
 	}
-	int size;
-	glGetIntegerv(GL_POINT_SIZE, &size);
+	int size = pDoc->getSize();
 	glPointSize((float)1);
 
 	
@@ -52,7 +51,7 @@ void ScatteredPointBrush::BrushMove(const Point source, const Point target)
 	}
 
 	glPointSize((float)size);
-	glEnd();
+	
 }
 
 void ScatteredPointBrush::BrushEnd(const Point source, const Point target)

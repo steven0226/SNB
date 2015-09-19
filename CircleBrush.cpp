@@ -43,9 +43,9 @@ void CircleBrush::BrushMove(const Point source, const Point target)
 	double theta = 2*M_PI/ 360.0;
 	double tangetial_factor = tan(theta);//calculate the tangential factor 
 	double radial_factor = cos(theta);//calculate the radial factor 
-	double radius;
-	glGetDoublev(GL_POINT_SIZE, &radius);
-	radius = radius / 2.0;
+     int size = pDoc->getSize();
+	
+	double radius = size / 2.0;
 	double x = radius; 
 
 	double y = 0;
