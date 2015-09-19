@@ -38,14 +38,13 @@ void ScatteredPointBrush::BrushMove(const Point source, const Point target)
 	glGetIntegerv(GL_POINT_SIZE, &size);
 	glPointSize((float)1);
 
-	glBegin(GL_POINTS);
-	SetColor(source);
+	
 
 	for (int i = 0; i < size; i++)
 	{
 		for (int j = 0; j < size; j++)
 		{
-			if (frand() > 0.20f) continue;
+			if (frand() > 0.10f) continue;
 			Point subs = Point(source.x+(-size/2+i), source.y+(-size/2+j));
 			Point subt = Point(target.x+(-size/2+i), target.y+(-size/2+j));
 			ImpBrush::c_pBrushes[BRUSH_POINTS]->BrushMove(subs, subt);

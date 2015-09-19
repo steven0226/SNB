@@ -8,6 +8,7 @@
 #include "scatteredcirclebrush.h"
 
 extern float frand();
+extern int irand(int max);
 
 ScatteredCircleBrush::ScatteredCircleBrush(ImpressionistDoc* pDoc, char* name) :
 ImpBrush(pDoc, name)
@@ -38,12 +39,22 @@ void ScatteredCircleBrush::BrushMove(const Point source, const Point target)
 		return;
 	}
 
-	glBegin(GL_POINTS);
-	SetColor(source);
+	int size;
+	glGetIntegerv(GL_POINT_SIZE, &size);
 
-	glVertex2d(target.x, target.y);
+	int no_of_circle = irand(2) + 3; //3 or 4 circle 
+	for (int i = 0; i< no_of_circle; i++)
+	{
+		int rx = (frand() - 0.5f)*size;
+		int ry = (frand() - 0.5f)*size;
 
-	glEnd();
+		Point subs = Point(source.x+rx, source.y+ry);
+		Point subt = Point(target.x+rx, target.y+ry); 
+		ImpBrush::c_pBrushes[BRUSH_CIRCLES]->BrushMove(subs, subt);
+	}
+	
+
+	//glEnd();
 }
 
 void ScatteredCircleBrush::BrushEnd(const Point source, const Point target)
