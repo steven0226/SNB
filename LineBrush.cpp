@@ -6,7 +6,7 @@
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
 #include "linebrush.h"
-
+#include "math.h"
 extern float frand();
 
 LineBrush::LineBrush(ImpressionistDoc* pDoc, char* name) :
@@ -37,14 +37,20 @@ void LineBrush::BrushMove(const Point source, const Point target)
 		printf("LineBrush::BrushMove  document is NULL\n");
 		return;
 	}
-	int length = pDoc->getSize();
+	int half_length = pDoc->getSize();
+	half_length /= 2;
 	int angle = pDoc->getLineAngle();
 
 	glBegin(GL_LINES);
 	SetColor(source);
-	glVertex2d(target.x, target.y);
-	glVertex2d(target.x +length, target.y);
-
+	if (angle <= 180){
+		glVertex2d(target.x - half_length*cos(double(angle)), target.y - half_length*sin(double(angle)));
+		glVertex2d(target.x + half_length*cos(double(angle)), target.y + half_length*sin(double(angle)));
+	}
+	else{
+		glVertex2d(target.x + half_length*cos(double(angle)), target.y + half_length*sin(double(angle)));
+		glVertex2d(target.x - half_length*cos(double(angle)), target.y - half_length*sin(double(angle)));
+	}
 	glEnd();
 }
 
