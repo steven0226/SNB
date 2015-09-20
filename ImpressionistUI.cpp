@@ -275,7 +275,7 @@ void ImpressionistUI::cb_stroke_dir_Choice(Fl_Widget* o, void* v)
 	ImpressionistDoc* pDoc = pUI->getDocument();
 
 	int type = (int)v;
-//	pDoc->setBrushType(type);
+	pDoc->setStrokeDir(type);
 }
 
 //------------------------------------------------------------
@@ -388,7 +388,7 @@ void ImpressionistUI::setLineWidth(int width)
 	m_nLineWidth = width;
 
 	if (width <= 40)
-		m_BrushLineWidthSlider->value(m_nSize);
+		m_BrushLineWidthSlider->value(width);
 }
 
 void ImpressionistUI::setLineAngle(int angle)
@@ -396,7 +396,7 @@ void ImpressionistUI::setLineAngle(int angle)
 	m_nLineAngle = angle;
 
 	if (angle <= 359)
-		m_BrushLineAngleSlider->value(m_nSize);
+		m_BrushLineAngleSlider->value(angle);
 }
 
 void ImpressionistUI::setAlpha(double alpha)
@@ -404,7 +404,7 @@ void ImpressionistUI::setAlpha(double alpha)
 	m_nAlpha = alpha;
 
 	if (alpha <= 1.00)
-		m_BrushSizeSlider->value(m_nSize);
+		m_BrushSizeSlider->value(alpha);
 }
 
 
@@ -438,10 +438,10 @@ Fl_Menu_Item ImpressionistUI::brushTypeMenu[NUM_BRUSH_TYPE+1] = {
   {0}
 };
 
-Fl_Menu_Item ImpressionistUI::StokeDirMenu[4] = {
-	{ "Slider/Right Mouse", FL_ALT + 's', (Fl_Callback *)ImpressionistUI::cb_stroke_dir_Choice, (void *)1 },
-	{ "Gradient", FL_ALT + 'g', (Fl_Callback *)ImpressionistUI::cb_stroke_dir_Choice, (void *)2 },
-	{ "Brush Direction", FL_ALT + 'b', (Fl_Callback *)ImpressionistUI::cb_stroke_dir_Choice, (void *)3 },
+Fl_Menu_Item ImpressionistUI::StokeDirMenu[NUM_STROKE_DIR+1] = {
+	{ "Slider/Right Mouse", FL_ALT + 's', (Fl_Callback *)ImpressionistUI::cb_stroke_dir_Choice, (void *)SLIDER_OR_RMOUSE },
+	{ "Gradient", FL_ALT + 'g', (Fl_Callback *)ImpressionistUI::cb_stroke_dir_Choice, (void *)GRADIENT },
+	{ "Brush Direction", FL_ALT + 'b', (Fl_Callback *)ImpressionistUI::cb_stroke_dir_Choice, (void *)BRUSH_DIRECTION },
 	{ 0 }
 };
 

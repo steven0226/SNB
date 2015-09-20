@@ -9,6 +9,7 @@
 #include "impressionistUI.h"
 #include "paintview.h"
 #include "ImpBrush.h"
+#include <cmath>
 
 
 #define LEFT_MOUSE_DOWN		1
@@ -117,13 +118,32 @@ void PaintView::draw()
 			RestoreContent();
 			break;
 		case RIGHT_MOUSE_DOWN:
+		
+			red_start_point = Point(target);
+
 
 			break;
 		case RIGHT_MOUSE_DRAG:
-
+			RestoreContent();
+			glLineWidth((float)1);
+			glBegin(GL_LINES);
+			glColor3ub(255, 0, 0); 
+			glVertex2d(red_start_point.x, red_start_point.y);
+			glVertex2d(target.x, target.y);
+			glEnd();
+			
 			break;
 		case RIGHT_MOUSE_UP:
-
+			RestoreContent();
+			if ((m_pDoc->m_pCurrentBrush == ImpBrush::c_pBrushes[BRUSH_LINES]) || (m_pDoc->m_pCurrentBrush == ImpBrush::c_pBrushes[BRUSH_SCATTERED_LINES]))
+			{
+				int new_size = (int)sqrt(pow(red_start_point.x - target.x, 2) + pow(red_start_point.y - target.y, 2));
+				int new_angle = (int)(atan2((double)target.y - red_start_point.y, (double)target.x - red_start_point.x) * 180/M_PI);
+				if (new_angle < 0)
+					new_angle += 360;
+				m_pDoc->m_pUI->setSize(new_size);
+				m_pDoc->m_pUI->setLineAngle(new_angle);
+			}
 			break;
 
 		default:

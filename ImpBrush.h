@@ -21,6 +21,13 @@ enum
 	NUM_BRUSH_TYPE // Make sure this stays at the end!
 };
 
+enum
+{
+	SLIDER_OR_RMOUSE = 0,
+	GRADIENT,
+	BRUSH_DIRECTION,
+	NUM_STROKE_DIR
+};
 
 class ImpressionistDoc; // Pre-declaring class
 

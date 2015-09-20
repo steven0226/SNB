@@ -52,7 +52,7 @@ ImpressionistDoc::ImpressionistDoc()
 
 	// make one of the brushes current
 	m_pCurrentBrush	= ImpBrush::c_pBrushes[0];
-
+	m_pCurrentStrokeDir = SLIDER_OR_RMOUSE;
 }
 
 
@@ -82,7 +82,7 @@ void ImpressionistDoc::setBrushType(int type)
 }
 void ImpressionistDoc::setStrokeDir(int type)
 {
-	m_pCurrentBrush = ImpBrush::c_pBrushes[type];
+	m_pCurrentStrokeDir = type;
 }
  
 //---------------------------------------------------------

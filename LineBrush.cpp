@@ -6,7 +6,7 @@
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
 #include "linebrush.h"
-#include "math.h"
+#include <cmath>
 extern float frand();
 
 LineBrush::LineBrush(ImpressionistDoc* pDoc, char* name) :
@@ -22,7 +22,6 @@ void LineBrush::BrushBegin(const Point source, const Point target)
 	int size = pDoc->getSize();
 	int width = pDoc->getLineWidth();
 
-
 	glPointSize((float)size);
 	glLineWidth((float)width);
 	BrushMove(source, target);
@@ -32,25 +31,36 @@ void LineBrush::BrushMove(const Point source, const Point target)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 	ImpressionistUI* dlg = pDoc->m_pUI;
-
 	if (pDoc == NULL) {
 		printf("LineBrush::BrushMove  document is NULL\n");
 		return;
 	}
-	int half_length = pDoc->getSize();
-	half_length /= 2;
+	int stroke_dir = pDoc->m_pCurrentStrokeDir;
+	int half_length = pDoc->getSize()/2;
 	int angle = pDoc->getLineAngle();
+	double PI_angle = (angle % 360) * M_PI / 180;
+	double x = half_length*cos(PI_angle);
+	double y = half_length*sin(PI_angle);
 
+	switch (stroke_dir){
+	case SLIDER_OR_RMOUSE:  break;
+	case GRADIENT:			{
+
+
+							break;
+							}
+
+	case BRUSH_DIRECTION:	{
+
+							break;
+							}
+	}
 	glBegin(GL_LINES);
 	SetColor(source);
-	if (angle <= 180){
-		glVertex2d(target.x - half_length*cos(double(angle)), target.y - half_length*sin(double(angle)));
-		glVertex2d(target.x + half_length*cos(double(angle)), target.y + half_length*sin(double(angle)));
-	}
-	else{
-		glVertex2d(target.x + half_length*cos(double(angle)), target.y + half_length*sin(double(angle)));
-		glVertex2d(target.x - half_length*cos(double(angle)), target.y - half_length*sin(double(angle)));
-	}
+	glVertex2d(target.x -x, target.y -y);
+	glVertex2d(target.x +x, target.y + y);
+
+	
 	glEnd();
 }
 

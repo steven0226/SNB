@@ -31,6 +31,7 @@ public:
 	void RestoreContent();
 
 	ImpressionistDoc *m_pDoc;
+	Point red_start_point;
 
 private:
 	GLvoid* m_pPaintBitstart;
@@ -42,6 +43,7 @@ private:
 			m_nEndCol,
 			m_nWindowWidth, 
 			m_nWindowHeight;
+			
 
 };
 
