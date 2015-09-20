@@ -41,8 +41,17 @@ public:
 	Fl_Slider*			m_BrushLineWidthSlider;
 	Fl_Slider*			m_BrushLineAngleSlider;
 	Fl_Slider*			m_BrushAlphaSlider;
-	
+	Fl_Slider*			m_SpacingSlider;
+	Fl_Slider*			m_EdgeThresholdSlider;
 	Fl_Button*          m_ClearCanvasButton;
+	Fl_Button*          m_AutoPaintButton;
+	Fl_Button*          m_DoEdgeThresholdButton;
+	Fl_Light_Button*    m_EdgeClippingButton;
+	Fl_Light_Button*    m_AnotherGradientButton;
+	Fl_Light_Button*	m_SizeRandButton;
+	
+
+
 
 	// Member functions
 	void				setDocument(ImpressionistDoc* doc);
@@ -70,6 +79,11 @@ private:
 	int     m_nLineWidth;
 	int     m_nLineAngle;
 	double     m_nAlpha;
+	int     m_nSpacing;
+	int		m_nEdgeThre;
+	boolean isEdgeClipping;
+	boolean isAnotherGradient;
+	boolean isSizeRand;
 	
 	// Static class members
 	static Fl_Menu_Item		menuitems[];
@@ -87,13 +101,23 @@ private:
 	static void	cb_exit(Fl_Menu_* o, void* v);
 	static void	cb_about(Fl_Menu_* o, void* v);
 	static void	cb_brushChoice(Fl_Widget* o, void* v);
+
 	static void	cb_stroke_dir_Choice(Fl_Widget* o, void* v);
 	static void	cb_clear_canvas_button(Fl_Widget* o, void* v);
-	static void	cb_sizeSlides(Fl_Widget* o, void* v);
+	static void	cb_edge_clipping_button(Fl_Widget* o, void* v);
+	static void	cb_another_gradient_button(Fl_Widget* o, void* v);
+	static void cb_size_rand_button(Fl_Widget* o, void* v);
+	static void cb_auto_print_button(Fl_Widget* o, void* v);
+	static void cb_do_edge_thre_button(Fl_Widget* o, void* v);
 
+
+	static void	cb_sizeSlides(Fl_Widget* o, void* v);
 	static void cb_lineWidthSlides(Fl_Widget* o, void* v);
 	static void cb_lineAngleSlides(Fl_Widget* o, void* v);
 	static void cb_alphaSlides(Fl_Widget* o, void* v);
+
+	static void cb_spacingSlides(Fl_Widget* o, void* v);
+	static void cb_edgeThreSlides(Fl_Widget* o, void* v);
 };
 
 #endif

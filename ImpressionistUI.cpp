@@ -253,17 +253,22 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 	ImpressionistDoc* pDoc=pUI->getDocument();
 
 	int type=(int)v;
-	if ((type == 1) || (type == 4))
+	if ((type == BRUSH_LINES) || (type == BRUSH_SCATTERED_LINES))
 	{
 		pUI->m_BrushLineWidthSlider->activate();
 		pUI->m_BrushLineAngleSlider->activate();
 		pUI->m_BrushStokeDirChoice->activate();
+		pUI->m_EdgeClippingButton->activate();
+		pUI->m_AnotherGradientButton->activate();
+
 	}
 	else  if (pUI->m_BrushLineWidthSlider->active())
 	{
 		pUI->m_BrushLineWidthSlider->deactivate();
 		pUI->m_BrushLineAngleSlider->deactivate();
 		pUI->m_BrushStokeDirChoice->deactivate();
+		pUI->m_EdgeClippingButton->deactivate();
+		pUI->m_AnotherGradientButton->deactivate();
 
 	}
 	pDoc->setBrushType(type);
@@ -289,6 +294,40 @@ void ImpressionistUI::cb_clear_canvas_button(Fl_Widget* o, void* v)
 	pDoc->clearCanvas();
 }
 
+void ImpressionistUI::cb_edge_clipping_button(Fl_Widget* o, void* v)
+{
+	ImpressionistUI *pUI = ((ImpressionistUI*)(o->user_data()));
+
+	if (pUI->isEdgeClipping == TRUE)
+		pUI->isEdgeClipping = FALSE;
+	else pUI->isEdgeClipping = TRUE;
+}
+
+void ImpressionistUI::cb_another_gradient_button(Fl_Widget* o, void* v)
+{
+	ImpressionistUI *pUI = ((ImpressionistUI*)(o->user_data()));
+
+	if (pUI->isAnotherGradient == TRUE) pUI->isAnotherGradient = FALSE;
+	else pUI->isAnotherGradient = TRUE;
+}
+
+void ImpressionistUI::cb_size_rand_button(Fl_Widget* o, void* v)
+{
+	ImpressionistUI *pUI = ((ImpressionistUI*)(o->user_data()));
+
+	if (pUI->isSizeRand == TRUE) pUI->isSizeRand = FALSE;
+	else pUI->isSizeRand = TRUE;
+}
+void ImpressionistUI::cb_auto_print_button(Fl_Widget* o, void* v)
+{
+	ImpressionistUI *pUI = ((ImpressionistUI*)(o->user_data()));
+
+}
+void ImpressionistUI::cb_do_edge_thre_button(Fl_Widget* o, void* v)
+{
+	ImpressionistUI *pUI = ((ImpressionistUI*)(o->user_data()));
+
+}
 
 //-----------------------------------------------------------
 // Updates the brush size to use from the value of the size
@@ -313,6 +352,16 @@ void ImpressionistUI::cb_lineAngleSlides(Fl_Widget* o, void* v)
 void ImpressionistUI::cb_alphaSlides(Fl_Widget* o, void* v)
 {
 	((ImpressionistUI*)(o->user_data()))->m_nAlpha = int(((Fl_Slider *)o)->value());
+}
+
+void ImpressionistUI::cb_spacingSlides(Fl_Widget* o, void* v)
+{
+	((ImpressionistUI*)(o->user_data()))->m_nSpacing = int(((Fl_Slider *)o)->value());
+}
+
+void ImpressionistUI::cb_edgeThreSlides(Fl_Widget* o, void* v)
+{
+	((ImpressionistUI*)(o->user_data())) -> m_nEdgeThre = int(((Fl_Slider *)o)->value());
 }
 
 
@@ -471,7 +520,7 @@ ImpressionistUI::ImpressionistUI() {
 			m_origView = new OriginalView(0, 25, 300, 275, "This is the orig view");//300jon
 			m_origView->box(FL_DOWN_FRAME);
 			m_origView->deactivate();
-
+			
 		group->end();
 		Fl_Group::current()->resizable(group);
     m_mainWindow->end();
@@ -481,8 +530,10 @@ ImpressionistUI::ImpressionistUI() {
 	m_nLineWidth = 1;
 	m_nLineAngle = 0;
 	m_nAlpha = 1.00;
+	m_nSpacing = 4;
+	m_nEdgeThre = 200;
 	// brush dialog definition
-	m_brushDialog = new Fl_Window(400, 325, "Brush Dialog");
+	m_brushDialog = new Fl_Window(420, 335, "Brush Dialog");
 		// Add a brush type choice to the dialog
 		m_BrushTypeChoice = new Fl_Choice(50,10,150,25,"&Brush");
 		m_BrushTypeChoice->user_data((void*)(this));	// record self to be used by static callback functions
@@ -557,6 +608,78 @@ ImpressionistUI::ImpressionistUI() {
 		m_BrushAlphaSlider->align(FL_ALIGN_RIGHT);
 		m_BrushAlphaSlider->callback(cb_alphaSlides);
 
+		//add a edge clipping button
+		m_EdgeClippingButton = new Fl_Light_Button(10, 180, 140, 25, "&Edge Clipping");
+		m_EdgeClippingButton->user_data((void*)(this));   // record self to be used by static callback functions
+		m_EdgeClippingButton->callback(cb_edge_clipping_button);
+		m_EdgeClippingButton->value(1);
+		m_EdgeClippingButton->deactivate();
+		isEdgeClipping = true;
+
+		//add another gradient button
+		m_AnotherGradientButton = new Fl_Light_Button(240, 180, 140, 25, "&Another Gradient");
+		m_AnotherGradientButton->user_data((void*)(this));   // record self to be used by static callback functions
+		m_AnotherGradientButton->callback(cb_another_gradient_button);
+		m_AnotherGradientButton->deactivate();
+		isAnotherGradient = false;
+
+		Fl_Group* group1 = new Fl_Group(10, 210, 410 , 45);
+		//add a spacing slider
+		group1->box(FL_UP_BOX);
+		m_SpacingSlider = new Fl_Value_Slider(15, 215, 130, 25, "Spacing");
+		m_SpacingSlider->user_data((void*)(this));	// record self to be used by static callback functions
+		m_SpacingSlider->type(FL_HOR_NICE_SLIDER);
+		m_SpacingSlider->labelfont(FL_COURIER);
+		m_SpacingSlider->labelsize(12);
+		m_SpacingSlider->minimum(1);
+		m_SpacingSlider->maximum(16);
+		m_SpacingSlider->step(1);
+		m_SpacingSlider->value(m_nSpacing);
+		m_SpacingSlider->align(FL_ALIGN_RIGHT);
+		m_SpacingSlider->callback(cb_spacingSlides);
+
+		//add a size rand button
+		m_SizeRandButton = new Fl_Light_Button(200, 215, 100, 25, "&Size Rand");
+		m_SizeRandButton->user_data((void*)(this));   // record self to be used by static callback functions
+		m_SizeRandButton->value(1);
+		m_SizeRandButton->callback(cb_size_rand_button);
+		isSizeRand = true;
+		
+		
+		
+ 	  //add an auto paint button
+		m_AutoPaintButton = new Fl_Button(310, 215, 90, 25, "&Auto Paint");
+		m_AutoPaintButton->user_data((void*)(this));
+		m_AutoPaintButton->callback(cb_auto_print_button);
+
+		group1->end();
+		Fl_Group::current()->resizable(group1);
+
+
+		Fl_Group* group2 = new Fl_Group(10, 260, 410, 45);
+		group2->box(FL_UP_BOX);
+		//add edge threshold slider
+		m_EdgeThresholdSlider = new Fl_Value_Slider(15, 265, 170, 25, "Edge Threshold");
+		m_EdgeThresholdSlider->user_data((void*)(this));	// record self to be used by static callback functions
+		m_EdgeThresholdSlider->type(FL_HOR_NICE_SLIDER);
+		m_EdgeThresholdSlider->labelfont(FL_COURIER);
+		m_EdgeThresholdSlider->labelsize(12);
+		m_EdgeThresholdSlider->minimum(0);
+		m_EdgeThresholdSlider->maximum(500);
+		m_EdgeThresholdSlider->step(3);
+		m_EdgeThresholdSlider->value(m_nEdgeThre);
+		m_EdgeThresholdSlider->align(FL_ALIGN_RIGHT);
+		m_EdgeThresholdSlider->callback(cb_edgeThreSlides);
+		//add  edge threshold button
+
+		m_DoEdgeThresholdButton = new Fl_Button(330, 265, 50, 25, "&Do it");
+		m_DoEdgeThresholdButton->user_data((void*)(this));
+		m_DoEdgeThresholdButton->callback(cb_do_edge_thre_button);
+		
+		group2->end();
+		Fl_Group::current()->resizable(group2);
+		
+		
     m_brushDialog->end();	
 
 }
