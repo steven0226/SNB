@@ -80,7 +80,11 @@ void ImpressionistDoc::setBrushType(int type)
 {
 	m_pCurrentBrush	= ImpBrush::c_pBrushes[type];
 }
-
+void ImpressionistDoc::setStrokeDir(int type)
+{
+	m_pCurrentBrush = ImpBrush::c_pBrushes[type];
+}
+ 
 //---------------------------------------------------------
 // Returns the size of the brush.
 //---------------------------------------------------------

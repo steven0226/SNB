@@ -257,14 +257,25 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 	{
 		pUI->m_BrushLineWidthSlider->activate();
 		pUI->m_BrushLineAngleSlider->activate();
+		pUI->m_BrushStokeDirChoice->activate();
 	}
-	else if ((pUI->m_BrushLineWidthSlider->active()) && (pUI->m_BrushLineAngleSlider->active()))
+	else  if (pUI->m_BrushLineWidthSlider->active())
 	{
 		pUI->m_BrushLineWidthSlider->deactivate();
 		pUI->m_BrushLineAngleSlider->deactivate();
+		pUI->m_BrushStokeDirChoice->deactivate();
 
 	}
 	pDoc->setBrushType(type);
+}
+
+void ImpressionistUI::cb_stroke_dir_Choice(Fl_Widget* o, void* v)
+{
+	ImpressionistUI* pUI = ((ImpressionistUI *)(o->user_data()));
+	ImpressionistDoc* pDoc = pUI->getDocument();
+
+	int type = (int)v;
+//	pDoc->setBrushType(type);
 }
 
 //------------------------------------------------------------
@@ -427,6 +438,13 @@ Fl_Menu_Item ImpressionistUI::brushTypeMenu[NUM_BRUSH_TYPE+1] = {
   {0}
 };
 
+Fl_Menu_Item ImpressionistUI::StokeDirMenu[4] = {
+	{ "Slider/Right Mouse", FL_ALT + 's', (Fl_Callback *)ImpressionistUI::cb_stroke_dir_Choice, (void *)1 },
+	{ "Gradient", FL_ALT + 'g', (Fl_Callback *)ImpressionistUI::cb_stroke_dir_Choice, (void *)2 },
+	{ "Brush Direction", FL_ALT + 'b', (Fl_Callback *)ImpressionistUI::cb_stroke_dir_Choice, (void *)3 },
+	{ 0 }
+};
+
 
 
 //----------------------------------------------------
@@ -474,6 +492,14 @@ ImpressionistUI::ImpressionistUI() {
 		m_ClearCanvasButton = new Fl_Button(240,10,150,25,"&Clear Canvas");
 		m_ClearCanvasButton->user_data((void*)(this));
 		m_ClearCanvasButton->callback(cb_clear_canvas_button);
+		//Add a stroke direction to  the dialog
+
+		m_BrushStokeDirChoice = new Fl_Choice(110, 40, 150, 25, "&Stroke Direction");
+		m_BrushStokeDirChoice->user_data((void*)(this));	 // record self to be used by static callback functions
+		
+		m_BrushStokeDirChoice->menu(StokeDirMenu);
+		m_BrushStokeDirChoice->callback(cb_stroke_dir_Choice);
+		m_BrushStokeDirChoice->deactivate();
 
 
 		// Add brush size slider to the dialog 

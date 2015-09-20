@@ -20,10 +20,11 @@ void ScatteredLineBrush::BrushBegin(const Point source, const Point target)
 	ImpressionistUI* dlg = pDoc->m_pUI;
 
 	int size = pDoc->getSize();
-
+	int width = pDoc->getLineWidth();
 
 
 	glPointSize((float)size);
+	glLineWidth((float)width);
 
 	BrushMove(source, target);
 }

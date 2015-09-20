@@ -30,6 +30,7 @@ public:
 	double	getAlpha();
 	void	setSize(int size);				// set the UI size
 	void	setBrushType(int type);			// called by the UI to set the brushType
+	void    setStrokeDir(int type);
 
 	char*	getImageName();					// get the current image name
 	
