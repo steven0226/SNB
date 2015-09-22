@@ -45,8 +45,8 @@ void ScatteredCircleBrush::BrushMove(const Point source, const Point target)
 	int no_of_circle = irand(2) + 3; //3 or 4 circle 
 	for (int i = 0; i< no_of_circle; i++)
 	{
-		int rx = (frand() - 0.5f)*size;
-		int ry = (frand() - 0.5f)*size;
+		int rx = irand(size) - size / 2;
+		int ry = irand(size) - size / 2;
 
 		Point subs = Point(source.x+rx, source.y+ry);
 		Point subt = Point(target.x+rx, target.y+ry); 

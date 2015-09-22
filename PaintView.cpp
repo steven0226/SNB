@@ -58,8 +58,10 @@ void PaintView::draw()
 		glDisable( GL_DEPTH_TEST );
 
 		ortho(); //Set the projection so 0,0 is in the lower left of the window and each pixel is 1 unit wide/tall. If you are drawing 2D images, your draw() method may want to call this if valid() is false.
-
+		
 		glClear( GL_COLOR_BUFFER_BIT );
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	Point scrollpos;// = GetScrollPosition();
@@ -103,13 +105,26 @@ void PaintView::draw()
 		Point target( coord.x, m_nWindowHeight - coord.y );
 		
 		// This is the event handler
-		switch (eventToDo) 
+		switch (eventToDo)
 		{
 		case LEFT_MOUSE_DOWN:
-			m_pDoc->m_pCurrentBrush->BrushBegin( source, target );
+			m_pDoc->setPreviousPoint(target);
+			m_pDoc->m_pCurrentBrush->BrushBegin(source, target);
 			break;
 		case LEFT_MOUSE_DRAG:
-			m_pDoc->m_pCurrentBrush->BrushMove( source, target );
+		
+			/*if (m_pDoc->m_pCurrentStrokeDir == BRUSH_DIRECTION)
+			{
+			  
+			int new_angle = (int)(atan2((double)target.y - previous_point.y, (double)target.x -previous_point.x) * 180 / M_PI);
+			if (new_angle < 0)
+				new_angle += 360;
+		
+			m_pDoc->m_pUI->setLineAngle(new_angle);
+			} */
+			m_pDoc->m_pCurrentBrush->BrushMove(source, target);
+			m_pDoc->setPreviousPoint(target);
+            
 			break;
 		case LEFT_MOUSE_UP:
 			m_pDoc->m_pCurrentBrush->BrushEnd( source, target );

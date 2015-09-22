@@ -27,11 +27,12 @@ public:
 	int		getSize();						// get the UI size
 	int		getLineWidth();
 	int		getLineAngle();
-	double	getAlpha();
+	float	getAlpha();
+	Point   getPreviousPoint();
 	void	setSize(int size);				// set the UI size
 	void	setBrushType(int type);			// called by the UI to set the brushType
 	void    setStrokeDir(int type);
-
+	void   setPreviousPoint(Point pp);
 	char*	getImageName();					// get the current image name
 	
 
@@ -54,7 +55,7 @@ public:
 	int m_pCurrentStrokeDir;
 	// Size of the brush.
 	int m_nSize;							
-
+	Point previous_point;
 	ImpressionistUI*	m_pUI;
 
 // Operations

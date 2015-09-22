@@ -30,7 +30,7 @@ ImpressionistDoc::ImpressionistDoc()
 	m_nWidth		= -1;
 	m_ucBitmap		= NULL;
 	m_ucPainting	= NULL;
-
+	previous_point = Point(0, 0);
 
 	// create one instance of each brush
 	ImpBrush::c_nBrushCount	= NUM_BRUSH_TYPE;
@@ -84,7 +84,9 @@ void ImpressionistDoc::setStrokeDir(int type)
 {
 	m_pCurrentStrokeDir = type;
 }
- 
+void   ImpressionistDoc::setPreviousPoint(Point pp){
+	previous_point = pp;
+}
 //---------------------------------------------------------
 // Returns the size of the brush.
 //---------------------------------------------------------
@@ -103,10 +105,15 @@ int ImpressionistDoc::getLineAngle()
 	return m_pUI->getLineAngle();
 }
 
-double ImpressionistDoc::getAlpha()
+float ImpressionistDoc::getAlpha()
 {
 	return m_pUI->getAlpha();
 }
+
+Point   ImpressionistDoc::getPreviousPoint(){
+	return previous_point;
+}
+
 //---------------------------------------------------------
 // Load the specified image
 // This is called by the UI when the load image button is 

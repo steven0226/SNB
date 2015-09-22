@@ -315,13 +315,16 @@ void ImpressionistUI::cb_size_rand_button(Fl_Widget* o, void* v)
 {
 	ImpressionistUI *pUI = ((ImpressionistUI*)(o->user_data()));
 
-	if (pUI->isSizeRand == TRUE) pUI->isSizeRand = FALSE;
-	else pUI->isSizeRand = TRUE;
+	if (pUI->isSizeRand == TRUE) 
+		pUI->isSizeRand = FALSE;
+	else
+		pUI->isSizeRand = TRUE;
 }
 void ImpressionistUI::cb_auto_print_button(Fl_Widget* o, void* v)
 {
 	ImpressionistUI *pUI = ((ImpressionistUI*)(o->user_data()));
 
+	//if (isSizeRand) change size then call brush (loop)
 }
 void ImpressionistUI::cb_do_edge_thre_button(Fl_Widget* o, void* v)
 {
@@ -351,7 +354,7 @@ void ImpressionistUI::cb_lineAngleSlides(Fl_Widget* o, void* v)
 
 void ImpressionistUI::cb_alphaSlides(Fl_Widget* o, void* v)
 {
-	((ImpressionistUI*)(o->user_data()))->m_nAlpha = int(((Fl_Slider *)o)->value());
+	((ImpressionistUI*)(o->user_data()))->m_nAlpha = float (((Fl_Slider *)o)->value());
 }
 
 void ImpressionistUI::cb_spacingSlides(Fl_Widget* o, void* v)
@@ -418,7 +421,7 @@ int	ImpressionistUI::getLineWidth(){
 int	ImpressionistUI::getLineAngle(){
 	return m_nLineAngle;
 }
-double	ImpressionistUI::getAlpha(){
+float ImpressionistUI::getAlpha(){
 	return m_nAlpha;
 }
 //-------------------------------------------------
@@ -448,7 +451,7 @@ void ImpressionistUI::setLineAngle(int angle)
 		m_BrushLineAngleSlider->value(angle);
 }
 
-void ImpressionistUI::setAlpha(double alpha)
+void ImpressionistUI::setAlpha(float alpha)
 {
 	m_nAlpha = alpha;
 

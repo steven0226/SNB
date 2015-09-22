@@ -65,11 +65,11 @@ public:
 	int					getSize();
 	int					getLineWidth();
 	int					getLineAngle();
-	double				getAlpha();
+	float				getAlpha();
 	void				setSize(int size);
 	void				setLineWidth(int width);
 	void				setLineAngle(int angle);
-	void				setAlpha(double alpha);
+	void				setAlpha(float alpha);
 
 private:
 	ImpressionistDoc*	m_pDoc;		// pointer to document to communicate with the document
@@ -78,7 +78,7 @@ private:
 	int		m_nSize;
 	int     m_nLineWidth;
 	int     m_nLineAngle;
-	double     m_nAlpha;
+	float     m_nAlpha;
 	int     m_nSpacing;
 	int		m_nEdgeThre;
 	boolean isEdgeClipping;
