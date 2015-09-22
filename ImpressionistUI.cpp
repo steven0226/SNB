@@ -217,6 +217,13 @@ void ImpressionistUI::cb_color(Fl_Menu_* o, void* v)
 	whoami(o)->m_colorDialog->show();
 }
 
+void ImpressionistUI::cb_swap_content(Fl_Menu_* o, void* v)
+{
+
+	ImpressionistDoc* pDoc = whoami(o)->getDocument();
+	pDoc->swapContent();
+
+}
 //------------------------------------------------------------
 // Clears the paintview canvas.
 // Called by the UI when the clear canvas menu item is chosen
@@ -492,6 +499,7 @@ Fl_Menu_Item ImpressionistUI::menuitems[] = {
 		{ "&Brushes...",	FL_ALT + 'b', (Fl_Callback *)ImpressionistUI::cb_brushes }, 
 		{ "&Clear Canvas", FL_ALT + 'c', (Fl_Callback *)ImpressionistUI::cb_clear_canvas, 0, FL_MENU_DIVIDER },
 		{ "&Color...", FL_ALT + 'a', (Fl_Callback *)ImpressionistUI::cb_color},
+		{ "&Swap...", FL_ALT + 'z', (Fl_Callback *)ImpressionistUI::cb_swap_content },
 		
 		{ "&Quit",			FL_ALT + 'q', (Fl_Callback *)ImpressionistUI::cb_exit },
 		{ 0 },

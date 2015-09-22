@@ -15,6 +15,7 @@
 #include <FL/Fl_Choice.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Light_Button.H>
+#include <FL/Fl_Color_Chooser.H>
 
 #include "Impressionist.h"
 #include "OriginalView.h"
@@ -50,6 +51,8 @@ public:
 	Fl_Light_Button*    m_AnotherGradientButton;
 	Fl_Light_Button*	m_SizeRandButton;
 	
+	Fl_Window*			m_colorDialog;
+	Fl_Color_Chooser*	m_ColorSelector;
 
 
 
@@ -68,7 +71,6 @@ public:
 	float				getAlpha();
 	int					getSpacing();
 	bool				getSizeRand();
-	
 	void				setSize(int size);
 	void				setLineWidth(int width);
 	void				setLineAngle(int angle);
@@ -82,6 +84,7 @@ private:
 	int     m_nLineWidth;
 	int     m_nLineAngle;
 	float     m_nAlpha;
+	float		m_colorBlend[3];
 	int     m_nSpacing;
 	int		m_nEdgeThre;
 	bool isEdgeClipping;
@@ -101,6 +104,8 @@ private:
 	static void	cb_save_image(Fl_Menu_* o, void* v);
 	static void	cb_brushes(Fl_Menu_* o, void* v);
 	static void	cb_clear_canvas(Fl_Menu_* o, void* v);
+	static void	cb_color(Fl_Menu_* o, void* v);
+	static void	cb_swap_content(Fl_Menu_* o, void* v);
 	static void	cb_exit(Fl_Menu_* o, void* v);
 	static void	cb_about(Fl_Menu_* o, void* v);
 	static void	cb_brushChoice(Fl_Widget* o, void* v);
@@ -114,6 +119,7 @@ private:
 	static void cb_do_edge_thre_button(Fl_Widget* o, void* v);
 
 
+
 	static void	cb_sizeSlides(Fl_Widget* o, void* v);
 	static void cb_lineWidthSlides(Fl_Widget* o, void* v);
 	static void cb_lineAngleSlides(Fl_Widget* o, void* v);
@@ -121,6 +127,7 @@ private:
 
 	static void cb_spacingSlides(Fl_Widget* o, void* v);
 	static void cb_edgeThreSlides(Fl_Widget* o, void* v);
+	static void cb_colorSelector(Fl_Widget * o, void* v);
 };
 
 #endif

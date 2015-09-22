@@ -23,7 +23,8 @@ public:
 	int		saveImage(char *iname);			// called by the UI to save image
 
 
-	int     clearCanvas();                  // called by the UI to clear the drawing canvas
+	int     clearCanvas();// called by the UI to clear the drawing canvas
+	int		swapContent();
 	int		getSize();						// get the UI size
 	int		getLineWidth();
 	int		getLineAngle();
