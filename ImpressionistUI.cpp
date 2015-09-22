@@ -207,6 +207,15 @@ void ImpressionistUI::cb_brushes(Fl_Menu_* o, void* v)
 {
 	whoami(o)->m_brushDialog->show();
 }
+//-------------------------------------------------------------
+// Brings up the color dialog
+// This is called by the UI when the color menu item
+// is chosen
+//-------------------------------------------------------------
+void ImpressionistUI::cb_color(Fl_Menu_* o, void* v)
+{
+	whoami(o)->m_colorDialog->show();
+}
 
 //------------------------------------------------------------
 // Clears the paintview canvas.
@@ -368,6 +377,13 @@ void ImpressionistUI::cb_edgeThreSlides(Fl_Widget* o, void* v)
 	((ImpressionistUI*)(o->user_data())) -> m_nEdgeThre = int(((Fl_Slider *)o)->value());
 }
 
+void ImpressionistUI::cb_colorSelector(Fl_Widget* o, void* v)
+{
+	/*ImpressionistUI *pUI = ((ImpressionistUI*)(o->user_data()));
+	pUI->m_colorBlend[0] = float(((Fl_Color_Chooser *)o)->r());
+	pUI->m_colorBlend[1] = float(((Fl_Color_Chooser *)o)->g());
+	pUI->m_colorBlend[2] = float(((Fl_Color_Chooser *)o)->b());*/
+}
 
 //---------------------------------- per instance functions --------------------------------------
 
@@ -475,6 +491,7 @@ Fl_Menu_Item ImpressionistUI::menuitems[] = {
 		{ "&Save Image...",	FL_ALT + 's', (Fl_Callback *)ImpressionistUI::cb_save_image },
 		{ "&Brushes...",	FL_ALT + 'b', (Fl_Callback *)ImpressionistUI::cb_brushes }, 
 		{ "&Clear Canvas", FL_ALT + 'c', (Fl_Callback *)ImpressionistUI::cb_clear_canvas, 0, FL_MENU_DIVIDER },
+		{ "&Color...", FL_ALT + 'a', (Fl_Callback *)ImpressionistUI::cb_color},
 		
 		{ "&Quit",			FL_ALT + 'q', (Fl_Callback *)ImpressionistUI::cb_exit },
 		{ 0 },
@@ -542,6 +559,10 @@ ImpressionistUI::ImpressionistUI() {
 	m_nAlpha = 1.00;
 	m_nSpacing = 4;
 	m_nEdgeThre = 200;
+	m_colorBlend[0] = 1.0;
+	m_colorBlend[1] = 1.0;
+	m_colorBlend[2] = 1.0;
+
 	// brush dialog definition
 	m_brushDialog = new Fl_Window(420, 335, "Brush Dialog");
 		// Add a brush type choice to the dialog
@@ -691,5 +712,15 @@ ImpressionistUI::ImpressionistUI() {
 		
 		
     m_brushDialog->end();	
+
+	//myInput->user_data((void*)(this));   // record self to be used by static callback functions
+	//myInput->callback(cb_myInput);
+
+	m_colorDialog = new Fl_Window(210, 250, "Color Selector");
+	m_ColorSelector = new Fl_Color_Chooser(0, 0, 200, 250, "Color Selector");
+	m_ColorSelector->user_data((void*)this);
+	m_ColorSelector->rgb(1.0, 1.0, 1.0);
+	m_ColorSelector->callback(cb_colorSelector);
+	m_colorDialog->end();
 
 }
