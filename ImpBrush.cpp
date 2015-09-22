@@ -46,6 +46,7 @@ void ImpBrush::SetColor (const Point source)
 	float alpha = pDoc->getAlpha();
 	float* colorBlend = pDoc->getColorBlend();
 	
+	
 	GLubyte color[4];
 	
 	memcpy ( color, pDoc->GetOriginalPixel( source ), 3 );

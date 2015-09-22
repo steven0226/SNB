@@ -386,10 +386,10 @@ void ImpressionistUI::cb_edgeThreSlides(Fl_Widget* o, void* v)
 
 void ImpressionistUI::cb_colorSelector(Fl_Widget* o, void* v)
 {
-	ImpressionistUI *pUI = ((ImpressionistUI*)(o->user_data()));
+	/*ImpressionistUI *pUI = ((ImpressionistUI*)(o->user_data()));
 	pUI->m_colorBlend[0] = float(((Fl_Color_Chooser *)o)->r());
 	pUI->m_colorBlend[1] = float(((Fl_Color_Chooser *)o)->g());
-	pUI->m_colorBlend[2] = float(((Fl_Color_Chooser *)o)->b());
+	pUI->m_colorBlend[2] = float(((Fl_Color_Chooser *)o)->b());*/
 }
 
 //---------------------------------- per instance functions --------------------------------------
@@ -448,10 +448,6 @@ int	ImpressionistUI::getLineAngle(){
 float ImpressionistUI::getAlpha(){
 	return m_nAlpha;
 }
-float* ImpressionistUI::getColorBlend(){
-	return m_colorBlend;
-}
-
 int ImpressionistUI::getSpacing(){
 	return m_nSpacing;
 }
