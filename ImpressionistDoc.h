@@ -27,6 +27,8 @@ public:
 	int		getSize();						// get the UI size
 	int		getLineWidth();
 	int		getLineAngle();
+	int		getSpacing();
+	bool    getSizeRand();
 	float	getAlpha();
 	Point   getPreviousPoint();
 	void	setSize(int size);				// set the UI size

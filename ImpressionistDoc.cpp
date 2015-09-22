@@ -110,6 +110,15 @@ float ImpressionistDoc::getAlpha()
 	return m_pUI->getAlpha();
 }
 
+int ImpressionistDoc::getSpacing()
+{
+	return m_pUI->getSpacing();
+}
+bool ImpressionistDoc::getSizeRand()
+{
+	return m_pUI->getSizeRand();
+}
+
 Point   ImpressionistDoc::getPreviousPoint(){
 	return previous_point;
 }

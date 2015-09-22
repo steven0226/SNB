@@ -66,6 +66,9 @@ public:
 	int					getLineWidth();
 	int					getLineAngle();
 	float				getAlpha();
+	int					getSpacing();
+	bool				getSizeRand();
+	
 	void				setSize(int size);
 	void				setLineWidth(int width);
 	void				setLineAngle(int angle);
@@ -81,9 +84,9 @@ private:
 	float     m_nAlpha;
 	int     m_nSpacing;
 	int		m_nEdgeThre;
-	boolean isEdgeClipping;
-	boolean isAnotherGradient;
-	boolean isSizeRand;
+	bool isEdgeClipping;
+	bool isAnotherGradient;
+	bool isSizeRand;
 	
 	// Static class members
 	static Fl_Menu_Item		menuitems[];

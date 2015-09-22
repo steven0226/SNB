@@ -10,7 +10,7 @@
 #include "paintview.h"
 #include "ImpBrush.h"
 #include <cmath>
-
+extern int irand(int size);
 
 #define LEFT_MOUSE_DOWN		1
 #define LEFT_MOUSE_DRAG		2
@@ -274,4 +274,34 @@ void PaintView::RestoreContent()
 				  m_pPaintBitstart);
 
 //	glDrawBuffer(GL_FRONT);
+}
+
+void PaintView::PerformAutoPrint()
+{
+	int spacing = m_pDoc->getSpacing();
+	bool isSizeRand = m_pDoc->getSizeRand();
+	int orginal_size = m_pDoc->getSize();
+	int new_size = orginal_size;
+	int width = m_pDoc->m_nPaintWidth; // spacing + 1;
+	int height = m_pDoc->m_nPaintHeight; // spacing + 1;
+
+	for (int y = 0; y < height; y += spacing){
+		for (int x = 0; x < width; x += spacing){
+			if (isSizeRand){
+				new_size = irand(orginal_size + 20);
+			}
+			m_pDoc->m_pUI->setSize(new_size);
+			Point point = Point(x, y);
+			if (x == 0 && y == 0)
+				m_pDoc->m_pCurrentBrush->BrushBegin(point, point);
+			else
+				m_pDoc->m_pCurrentBrush->BrushMove(point, point);
+
+		}
+		glFlush();
+	}
+	SaveCurrentContent();
+	RestoreContent();
+	m_pDoc->m_pUI->setSize(orginal_size);
+
 }

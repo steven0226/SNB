@@ -325,6 +325,7 @@ void ImpressionistUI::cb_auto_print_button(Fl_Widget* o, void* v)
 	ImpressionistUI *pUI = ((ImpressionistUI*)(o->user_data()));
 
 	//if (isSizeRand) change size then call brush (loop)
+	pUI->m_paintView->PerformAutoPrint();
 }
 void ImpressionistUI::cb_do_edge_thre_button(Fl_Widget* o, void* v)
 {
@@ -423,6 +424,12 @@ int	ImpressionistUI::getLineAngle(){
 }
 float ImpressionistUI::getAlpha(){
 	return m_nAlpha;
+}
+int ImpressionistUI::getSpacing(){
+	return m_nSpacing;
+}
+bool ImpressionistUI::getSizeRand(){
+	return isSizeRand;
 }
 //-------------------------------------------------
 // Set the brush size

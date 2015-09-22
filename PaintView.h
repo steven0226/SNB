@@ -30,6 +30,10 @@ public:
 
 	void RestoreContent();
 
+	void PerformAutoPrint();
+
+
+
 	ImpressionistDoc *m_pDoc;
 	Point red_start_point;
 
