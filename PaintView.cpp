@@ -278,6 +278,30 @@ void PaintView::RestoreContent()
 
 void PaintView::PerformAutoPrint()
 {
+	Point scrollpos;// = GetScrollPosition();
+	scrollpos.x = 0;
+	scrollpos.y = 0;
+	m_nWindowWidth = w();
+	m_nWindowHeight = h();
+
+	int drawWidth, drawHeight;
+	drawWidth = min(m_nWindowWidth, m_pDoc->m_nPaintWidth);
+	drawHeight = min(m_nWindowHeight, m_pDoc->m_nPaintHeight);
+
+	int startrow = m_pDoc->m_nPaintHeight - (scrollpos.y + drawHeight);
+	if (startrow < 0) startrow = 0;
+
+	m_pPaintBitstart = m_pDoc->m_ucPainting +
+		3 * ((m_pDoc->m_nPaintWidth * startrow) + scrollpos.x);
+
+	m_nDrawWidth = drawWidth;
+	m_nDrawHeight = drawHeight;
+
+	m_nStartRow = startrow;
+	m_nEndRow = startrow + drawHeight;
+	m_nStartCol = scrollpos.x;
+	m_nEndCol = m_nStartCol + drawWidth;
+
 	int spacing = m_pDoc->getSpacing();
 	bool isSizeRand = m_pDoc->getSizeRand();
 	int orginal_size = m_pDoc->getSize();
@@ -285,23 +309,32 @@ void PaintView::PerformAutoPrint()
 	int width = m_pDoc->m_nPaintWidth; // spacing + 1;
 	int height = m_pDoc->m_nPaintHeight; // spacing + 1;
 
-	for (int y = 0; y < height; y += spacing){
+		for (int y = 0; y < height; y += spacing){
 		for (int x = 0; x < width; x += spacing){
 			if (isSizeRand){
 				new_size = irand(orginal_size + 20);
 			}
 			m_pDoc->m_pUI->setSize(new_size);
-			Point point = Point(x, y);
+			//printf("%d",new_size);
+			Point source(x + m_nStartCol, m_nEndRow - y);
+			Point target(x, m_nWindowHeight -y);
 			if (x == 0 && y == 0)
-				m_pDoc->m_pCurrentBrush->BrushBegin(point, point);
-			else
-				m_pDoc->m_pCurrentBrush->BrushMove(point, point);
+				m_pDoc->m_pCurrentBrush->BrushBegin(source, target);
+			else{
+				m_pDoc->m_pCurrentBrush->BrushMove(source, target);
+				printf("a");
+			}
 
 		}
 		glFlush();
+#ifndef MESA
+		// To avoid flicker on some machines.
+		glDrawBuffer(GL_BACK);
+#endif // !MESA
 	}
 	SaveCurrentContent();
 	RestoreContent();
+
 	m_pDoc->m_pUI->setSize(orginal_size);
 
 }
