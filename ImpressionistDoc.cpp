@@ -110,6 +110,10 @@ float ImpressionistDoc::getAlpha()
 	return m_pUI->getAlpha();
 }
 
+float* ImpressionistDoc::getColorBlend(){
+	return m_pUI->getColorBlend();
+}
+
 int ImpressionistDoc::getSpacing()
 {
 	return m_pUI->getSpacing();
