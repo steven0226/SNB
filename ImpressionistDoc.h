@@ -31,6 +31,7 @@ public:
 	int		getSpacing();
 	bool    getSizeRand();
 	float	getAlpha();
+	float*	getColorBlend();
 	Point   getPreviousPoint();
 	void	setSize(int size);				// set the UI size
 	void	setBrushType(int type);			// called by the UI to set the brushType

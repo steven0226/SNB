@@ -69,6 +69,7 @@ public:
 	int					getLineWidth();
 	int					getLineAngle();
 	float				getAlpha();
+	float*				getColorBlend();
 	int					getSpacing();
 	bool				getSizeRand();
 	void				setSize(int size);

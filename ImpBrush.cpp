@@ -44,10 +44,14 @@ void ImpBrush::SetColor (const Point source)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 	float alpha = pDoc->getAlpha();
+	float* colorBlend = pDoc->getColorBlend();
 	
 	GLubyte color[4];
 	
 	memcpy ( color, pDoc->GetOriginalPixel( source ), 3 );
+	color[0] = static_cast<GLubyte> (color[0] * colorBlend[0]);
+	color[1] = static_cast<GLubyte> (color[1] * colorBlend[1]);
+	color[2] = static_cast<GLubyte> (color[2] * colorBlend[2]);
 	color[3] = static_cast<GLubyte>(alpha * 255.f);
 	glColor4ubv( color );
 
