@@ -218,11 +218,15 @@ int ImpressionistDoc::swapContent()
 	// Release old storage
 	if (m_ucPainting)
 	{
-		delete[] m_ucPainting;
+		//delete[] m_ucPainting;
+		unsigned char*	temp;
+		temp = m_ucPainting;
+		m_ucPainting = m_ucBitmap;
+		m_ucBitmap = temp;
 
 		// allocate space for draw view
-		m_ucPainting = new unsigned char[m_nPaintWidth*m_nPaintHeight * 3];
-		memset(m_ucPainting, 0, m_nPaintWidth*m_nPaintHeight * 3);
+		//m_ucPainting = new unsigned char[m_nPaintWidth*m_nPaintHeight * 3];
+		//memset(m_ucPainting, 0, m_nPaintWidth*m_nPaintHeight * 3);
 
 		// refresh paint view as well	
 		m_pUI->m_origView->refresh();
